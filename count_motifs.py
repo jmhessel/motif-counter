@@ -57,7 +57,7 @@ def count_motifs(seqs, window):
     print('Counting motifs...')
     for s in tqdm.tqdm(seqs):
         s = s.upper()
-        for start_idx in range(len(s)-window+1):
+        for start_idx in tqdm.tqdm(range(len(s)-window+1)):
             motif = s[start_idx:start_idx+window]
             motif_counts[motif] += 1
     return motif_counts
