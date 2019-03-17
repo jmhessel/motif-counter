@@ -30,7 +30,7 @@ def parse_args():
                         help='How strong should the dirichlet prior be?')
     parser.add_argument('--pval',
                         type=float,
-                        default=.01,
+                        default=.001,
                         help='What is the p-value for a true difference?')
     return parser.parse_args()
 
