@@ -110,7 +110,7 @@ def main():
     p_vals = z_score_to_pval(z_scores)
 
     reject, p_val, _, _ = statsmodels.stats.multitest.multipletests(
-        p_vals, alpha=args.pval, method='holm')
+        p_vals, alpha=args.pval, method='Holm')
     sig_results = [res for res, rej in zip(results, reject) if rej]
     print('{} significant results'.format(len(sig_results)))
 
