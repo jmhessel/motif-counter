@@ -23,6 +23,7 @@ python count_motifs.py Jc_000226F.fa JC_optix300kb.fa  --window 5
 the output I get is:
 
 ```
+More in Jc_000226F.fa sequences:
 +-------+---------+---------------+---------------+
 | Motif | Z-score | Rate in seqs1 | Rate in seqs2 |
 +-------+---------+---------------+---------------+
