@@ -32,6 +32,10 @@ def parse_args():
                         type=float,
                         default=.001,
                         help='What is the p-value for a true difference?')
+    parser.add_argument('--prettyprint',
+                        type=int,
+                        default=0,
+                        help='Should we pretty print?')
     return parser.parse_args()
 
 
@@ -63,6 +67,18 @@ def count_motifs(seqs, window):
     return motif_counts
 
 
+def print_table(ptable, pprint):
+    if pprint:
+        print(ptable)
+        return
+    else:
+        print('\t'.join(['_'.join(x.split()) for x in ptable.field_names]))
+        for r in ptable:
+            r.border = False
+            r.header = False
+            print('\t'.join(r.get_string().split()))
+
+
 def z_score_to_pval(score):
     '''For a given Z-score, returns a 2-sided p value'''
     return scipy.stats.norm.sf(abs(score))*2
@@ -70,6 +86,7 @@ def z_score_to_pval(score):
 
 def main():
     args = parse_args()
+
     seqs1, seqs2 = map(load_sequences, [args.file1, args.file2])
     motifs1, motifs2 = map(lambda x: count_motifs(x, args.window), [seqs1, seqs2])
 
@@ -127,8 +144,8 @@ def main():
     if row_count == 0:
         print('None.')
     else:
-        print(table1)
-    
+        print_table(table1, args.prettyprint)
+
     row_count = 0
     table2 = prettytable.PrettyTable()
     table2.field_names = ['Motif', 'Z-score', 'Rate in seqs1', 'Rate in seqs2']
@@ -141,7 +158,7 @@ def main():
     if row_count == 0:
         print('None.')
     else:
-        print(table2)
+        print_table(table2, args.prettyprint)
     
     
 if __name__ == '__main__':
